@@ -139,9 +139,25 @@ class ApiService {
 
                   if (value['time'] != null) {
                     openTime = [];
+
                     var tmpOpenTimeList = value['time'].split('~');
-                    openTime.add(DateFormat("hh:mm").parse(tmpOpenTimeList[0]));
-                    openTime.add(DateFormat("hh:mm").parse(tmpOpenTimeList[1]));
+                    if (tmpOpenTimeList.length == 1) {
+                      openTime
+                          .add(DateFormat("hh:mm").parse(tmpOpenTimeList[0]));
+                    } else if (tmpOpenTimeList.length == 2) {
+                      try {
+                        openTime
+                            .add(DateFormat("hh:mm").parse(tmpOpenTimeList[0]));
+                      } catch (e) {
+                        openTime.add(DateFormat("hh:mm").parse("00:00"));
+                      }
+                      try {
+                        openTime
+                            .add(DateFormat("hh:mm").parse(tmpOpenTimeList[1]));
+                      } catch (e) {
+                        openTime.add(DateFormat("hh:mm").parse("00:00"));
+                      }
+                    }
                   }
 
                   MealModel meal = MealModel(
